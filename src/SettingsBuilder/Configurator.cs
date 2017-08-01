@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace sparksettings
 {
 
-  public class ConfigureSettings
+  internal class ConfigureSettings
   {
     internal List<ConfigureSettings> children;
     internal List<Prop> properties;
@@ -14,11 +14,11 @@ namespace sparksettings
 
     private readonly ConfigureSettingsFluent fluent;
 
-    public ConfigureSettings()
+    internal ConfigureSettings()
     {
       fluent = new ConfigureSettingsFluent(this);
     }
-    public ConfigureSettingsFluent NewSettings
+    internal ConfigureSettingsFluent NewSettings
     {
       get { return fluent; }
     }
@@ -26,7 +26,7 @@ namespace sparksettings
     public class ConfigureSettingsFluent
     {
       private ConfigureSettings settings;
-      internal ConfigureSettingsFluent(ConfigureSettings settings)
+      public ConfigureSettingsFluent(ConfigureSettings settings)
       {
         this.settings = settings;
       }
@@ -59,42 +59,42 @@ namespace sparksettings
 
     }
 
-    public class PropFluent{
+    internal class PropFluent{
       private Prop property;
       private ConfigureSettingsFluent parent;
 
-      public PropFluent(Prop property, ConfigureSettingsFluent parent)
+      internal PropFluent(Prop property, ConfigureSettingsFluent parent)
       {
         this.property = property;
         this.parent = parent;
       }
 
-      public PropFluent Name(string name)
+      internal PropFluent Name(string name)
       {
-        property.Name = name;
+        property.name = name;
         return this;
       }
 
 
 
-      public ConfigureSettingsFluent EndProperty()
+      internal ConfigureSettingsFluent EndProperty()
       {
         return this.parent;
       }
     }
 
-    public enum SettingTypes{
+    internal enum SettingTypes{
       Json,
     }
 
-    public enum PropType{
+    internal enum PropType{
       String,
       Numeric,
       DateTime,
       Boolean,
     }
 
-    public class Prop
+    internal class Prop
     {
       internal string name;
       internal PropType propType;
@@ -104,12 +104,12 @@ namespace sparksettings
 
       private PropFluent fluent;
 
-      public Prop(ConfigureSettingsFluent parent)
+      internal Prop(ConfigureSettingsFluent parent)
       {
         this.fluent = new PropFluent(this, parent);
       }
 
-      public PropFluent NewProperty
+      internal PropFluent NewProperty
       {
         get {return fluent;}
       }
